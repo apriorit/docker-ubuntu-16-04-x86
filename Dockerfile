@@ -6,11 +6,11 @@ ENV DEBIAN_FRONTEND noninteractive
 #uncomment all src repositories
 RUN sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list && sed -i -- 's/# deb-src/deb-src/g' /etc/apt/sources.list
 
-RUN apt-get update && apt-get install -y bison++ unzip libssl-dev libprocps4-dev libxalan-c-dev libxerces-c-dev libnl-3-dev \
-libcrypto++-dev libcrypto++9v5 libpcre++-dev uuid-dev libsnappy-dev build-essential libboost-all-dev cmake maven libicu-dev \
-zlib1g-dev liblog4cpp5-dev libncurses5-dev libselinux1-dev wget libsqlite3-dev google-mock libvirt-dev libmysqlclient-dev \
-libjpeg-turbo8-dev libnuma-dev libxml2-dev qtbase5-dev qtdeclarative5-dev libgcrypt20-dev libglib2.0-dev libpixman-1-dev \
-libhivex-dev libguestfs-dev libedit-dev g++-multilib
+RUN apt-get update && apt-get install -y bison++:i386 unzip:i386 libssl-dev:i386 libprocps4-dev:i386 libxalan-c-dev:i386 libxerces-c-dev:i386 libnl-3-dev:i386 \
+libcrypto++-dev:i386 libcrypto++9v5:i386 libpcre++-dev:i386 uuid-dev:i386 libsnappy-dev:i386 build-essential:i386 libboost-all-dev:i386 cmake:i386 maven:i386 libicu-dev:i386 \
+zlib1g-dev:i386 liblog4cpp5-dev:i386 libncurses5-dev:i386 libselinux1-dev:i386 wget:i386 libsqlite3-dev:i386 google-mock:i386 libvirt-dev:i386 libmysqlclient-dev:i386 \
+libjpeg-turbo8-dev:i386 libnuma-dev:i386 libxml2-dev:i386 qtbase5-dev:i386 qtdeclarative5-dev:i386 libgcrypt20-dev:i386 libglib2.0-dev:i386 libpixman-1-dev:i386 \
+libhivex-dev:i386 libguestfs-dev:i386 libedit-dev:i386
 
 RUN wget http://nixos.org/releases/patchelf/patchelf-0.8/patchelf-0.8.tar.gz && tar xf patchelf-0.8.tar.gz && patchelf-0.8/configure && make install && rm -rf patchelf-0.8 && rm -f patchelf-0.8.tar.gz
 RUN apt-get upgrade -y
