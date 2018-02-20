@@ -4,6 +4,9 @@ MAINTAINER bidnichenko <bidnichenko.alex@apriorit.com>
 RUN apt-get update && apt-get install -y bison++ libssl-dev libxalan-c-dev libxerces-c-dev libprocps4-dev libnl-3-dev \
 libcrypto++-dev libpcre++-dev uuid-dev libsnappy-dev build-essential libboost-all-dev cmake maven libicu-dev zlib1g-dev \
 liblog4cpp5-dev libncurses5-dev libselinux1-dev wget libsqlite3-dev automake autoconf autotools-dev libevent-dev
+
+RUN apt-get install -y libelf-dev
+
 RUN cd /tmp && wget https://github.com/emcrisostomo/fswatch/releases/download/1.9.3/fswatch-1.9.3.tar.gz && tar xf fswatch-1.9.3.tar.gz && \
 cd fswatch-1.9.3 && ./configure && make install && cd ../ && rm -rf fswatch-1.9.3.tar.gz && rm -rf fswatch-1.9.3
 RUN cd /tmp && wget https://archive.apache.org/dist/thrift/0.9.0/thrift-0.9.0.tar.gz && tar xf thrift-0.9.0.tar.gz && cd thrift-0.9.0 && ./configure && make install && rm -rf thrift-0.9.0 thrift-0.9.0.tar.gz
