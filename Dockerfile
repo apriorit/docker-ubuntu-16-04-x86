@@ -16,6 +16,7 @@ RUN wget http://nixos.org/releases/patchelf/patchelf-0.8/patchelf-0.8.tar.gz && 
 RUN apt-get upgrade -y
 RUN apt-get build-dep -y qemu-kvm
 RUN apt-get install -y snapcraft
+RUN apt-get install -y git
 
 #gRPC
 RUN git clone --recursive --branch release-0_14_1 --single-branch https://github.com/grpc/grpc
