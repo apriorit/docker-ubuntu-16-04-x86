@@ -19,7 +19,7 @@ RUN apt-get install -y snapcraft
 RUN apt-get install -y git autoconf
 
 #add linux kernel headers
-apt-get install -y linux-headers-$(uname -r)
+RUN apt-get install -y linux-headers-$(uname -r)
 
 #gRPC
 RUN git clone --recursive --branch release-0_14_1 --single-branch https://github.com/grpc/grpc
