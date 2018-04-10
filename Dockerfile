@@ -3,8 +3,6 @@ FROM i386/ubuntu:16.04
 MAINTAINER bidnichenko <bidnichenko.alex@apriorit.com>
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN export KERNEL_VERSION=$(uname -r)
-ENV KERNEL_VERSION $KERNEL_VERSION
 
 #uncomment all src repositories
 RUN sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list && sed -i -- 's/# deb-src/deb-src/g' /etc/apt/sources.list
@@ -15,9 +13,10 @@ libcrypto++-dev:i386 libcrypto++9v5:i386 libpcre++-dev:i386 uuid-dev:i386 libsna
 zlib1g-dev:i386 liblog4cpp5-dev:i386 libncurses5-dev:i386 libselinux1-dev:i386 wget:i386 libsqlite3-dev:i386 google-mock:i386 libvirt-dev:i386 libmysqlclient-dev:i386 \
 libjpeg-turbo8-dev:i386 libnuma-dev:i386 libxml2-dev:i386 qtbase5-dev:i386 qtdeclarative5-dev:i386 libgcrypt20-dev:i386 libglib2.0-dev:i386 libpixman-1-dev:i386 \
 libhivex-dev:i386 libguestfs-dev:i386 libedit-dev:i386 libc6-dev-x32:i386 libelf-dev:i386 \
-snapcraft libelf-dev git autoconf patchelf linux-headers-$KERNEL_VERSION \
+snapcraft libelf-dev git autoconf patchelf linux-headers-4.10.0-30-generic \
 && apt-get build-dep -y qemu-kvm \
 && rm /var/lib/apt/lists/* -rf
+
 
 #gRPC
 RUN git clone --recursive --branch release-0_14_1 --single-branch https://github.com/grpc/grpc \
