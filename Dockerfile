@@ -1,24 +1,24 @@
 # This docker file contains build environment
 FROM i386/ubuntu:16.04
-MAINTAINER bidnichenko <bidnichenko.alex@apriorit.com>
+MAINTAINER Sergii Kusii <kusii.sergii@apriorit.com>
 
-ENV DEBIAN_FRONTEND noninteractive
+#old kernels from http://kernel.ubuntu.com/~kernel-ppa/mainline
 
-#uncomment all src repositories
-RUN sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list && sed -i -- 's/# deb-src/deb-src/g' /etc/apt/sources.list
-
-RUN apt-get update && apt-get upgrade -y \
-&& apt-get install -y bison++:i386 unzip:i386 libssl-dev:i386 libprocps4-dev:i386 libxalan-c-dev:i386 libxerces-c-dev:i386 libnl-3-dev:i386 \
-libcrypto++-dev:i386 libcrypto++9v5:i386 libpcre++-dev:i386 uuid-dev:i386 libsnappy-dev:i386 build-essential:i386 libboost-all-dev:i386 cmake:i386 maven:i386 libicu-dev:i386 \
-zlib1g-dev:i386 liblog4cpp5-dev:i386 libncurses5-dev:i386 libselinux1-dev:i386 wget:i386 libsqlite3-dev:i386 google-mock:i386 libvirt-dev:i386 libmysqlclient-dev:i386 \
-libjpeg-turbo8-dev:i386 libnuma-dev:i386 libxml2-dev:i386 qtbase5-dev:i386 qtdeclarative5-dev:i386 libgcrypt20-dev:i386 libglib2.0-dev:i386 libpixman-1-dev:i386 \
-libhivex-dev:i386 libguestfs-dev:i386 libedit-dev:i386 libc6-dev-x32:i386 libelf-dev:i386 \
-snapcraft libelf-dev git autoconf patchelf linux-headers-4.10.0-30-generic \
-&& apt-get build-dep -y qemu-kvm \
-&& rm /var/lib/apt/lists/* -rf
-
-
-#gRPC
-RUN git clone --recursive --branch release-0_14_1 --single-branch https://github.com/grpc/grpc \
-&& cd grpc && make HAS_SYSTEM_OPENSSL_NPN=false HAS_SYSTEM_OPENSSL_ALPN=false && make install prefix=/opt/grpc \
-&& cd third_party/protobuf/ && make install prefix=/opt/grpc && rm /grpc -rf
+RUN apt-get update && \
+apt install -y linux-image-4.15.0-32-generic linux-image-4.10.0-30-generic linux-image-4.8.0-52-generic  && \
+apt install -y linux-headers-4.4.0-103-generic linux-headers-4.13.0-39-generic  && \
+mkdir /tmp/rs_dep && cd /tmp/rs_dep && \
+apt install -y wget &&  \
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.7.1-raring/linux-headers-3.7.1-030701_3.7.1-030701.201212171620_all.deb && \
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.7.1-raring/linux-headers-3.7.1-030701-generic_3.7.1-030701.201212171620_i386.deb && \
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.10.103/linux-headers-3.10.103-0310103_3.10.103-0310103.201608311738_all.deb && \
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.10.103/linux-headers-3.10.103-0310103-generic_3.10.103-0310103.201608311738_i386.deb && \
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.14.1-trusty/linux-headers-3.14.1-031401_3.14.1-031401.201404141220_all.deb && \
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.14.1-trusty/linux-headers-3.14.1-031401-generic_3.14.1-031401.201404141220_i386.deb && \
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.16-utopic/linux-headers-3.16.0-031600_3.16.0-031600.201408031935_all.deb && \
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.16-utopic/linux-headers-3.16.0-031600-generic_3.16.0-031600.201408031935_i386.deb && \
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.19-vivid/linux-headers-3.19.0-031900_3.19.0-031900.201504091832_all.deb && \
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.19-vivid/linux-headers-3.19.0-031900-generic_3.19.0-031900.201504091832_i386.deb && \
+ls -1 | grep all.deb | xargs dpkg -i && ls -1 | grep i386.deb | xargs dpkg -i && \
+rm -rf /tmp/rs_dep && \
+rm /var/lib/apt/lists/* -rf 
